@@ -37,12 +37,12 @@ def get_url(url):
     soup = BeautifulSoup(r.text)
     
     for link in soup.find_all('a'):
-	try:
-	    new_url = urlsplit(link['href'])[1]
-	except:pass
+		try:
+			new_url = urlsplit(link['href'])[1]
+		except:pass
 
-	if new_url not in url_list and url not in url_list:
-	    url_list.append(new_url)
+		if new_url not in url_list and url not in url_list:
+			url_list.append(new_url)
 
     print("[+] ---> " + url)
     for x in url_list:print('\t' + x)
@@ -55,11 +55,11 @@ def url_all(url,tag):
     soup = BeautifulSoup(r.text)
     
     if tag == 'link':
-	for t in soup.find_all('a'):
-	    print(t['href'])
+		for t in soup.find_all('a'):
+			print(t['href'])
     else:
-	for t in soup.find_all(tag):
-	    print(t.prettify())
+		for t in soup.find_all(tag):
+			print(t.prettify())
     
 def get_headers(url):
 
@@ -74,7 +74,7 @@ def get_headers(url):
     reg_emails = re.compile('[a-zA-Z0-9.-_]*' + '@' + '[a-zA-Z0-9.-]*')
     
     for email in reg_emails.findall(r.text):
-	print(email)
+		print(email)
 
 def get_ips(domain):
     
@@ -83,8 +83,8 @@ def get_ips(domain):
     print("\n[+] IP found:\n" + '-' * 40 + '\n\n')
     
     for ip in result:
-	print(str(count) + ' : ' + ip[4][0])
-	count += 1    
+		print(str(count) + ' : ' + ip[4][0])
+		count += 1    
 
 def my_shodan(ip):
 
@@ -94,10 +94,10 @@ def my_shodan(ip):
     api = Shodan(SHODAN_API_KEY)
     
     try:
-	host = api.host(ip)
+		host = api.host(ip)
     except:
-	print("\n[-] Shodan err,please check your domain or network!!!")
-	exit(1)
+		print("\n[-] Shodan err,please check your domain or network!!!")
+		exit(1)
 
     print("[+] Shodan search:" + '\n' + '-' * 40)
     print(""" 
@@ -129,38 +129,38 @@ def main():
     url = options.url
 
     if options.url == None:
-	print(parser.usage)
-	exit(1)
+		print(parser.usage)
+		exit(1)
     
     if options.info:
-	if not options.all and options.tag == None:
-	    domain = urlsplit(url)[1]
-	    ip	   = socket.gethostbyname(domain)
-	    get_headers(url)
-	    get_ips(domain)
-	    my_shodan(ip)
-	    exit(0)
-	else:
-	    print(parser.usage)
-	    exit(1)
+		if not options.all and options.tag == None:
+			domain = urlsplit(url)[1]
+			ip	   = socket.gethostbyname(domain)
+			get_headers(url)
+			get_ips(domain)
+			my_shodan(ip)
+			exit(0)
+		else:
+			print(parser.usage)
+			exit(1)
     if options.all:
-	if options.tag == None:
-	    print("[-]Using tag or link")
-	    exit(1)
-	else:
-	    print("[+] Get all tag for " + url)
-	    url_all(url,options.tag)
-	    exit(0)
+		if options.tag == None:
+			print("[-]Using tag or link")
+			exit(1)
+		else:
+			print("[+] Get all tag for " + url)
+	    	url_all(url,options.tag)
+	    	exit(0)
 
     url_queue = Queue.Queue()
     for q in get_url(url):
-	url_queue.put(q)
+		url_queue.put(q)
 
     while not url_queue.empty():
-	new_link = 'http://' + url_queue.get()
-	try:
-	    get_url(new_link)
-	except:pass
+		new_link = 'http://' + url_queue.get()
+		try:
+			get_url(new_link)
+		except:pass
 
 if __name__ == '__main__':
 
