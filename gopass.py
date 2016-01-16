@@ -1,17 +1,18 @@
 #!/usr/bin/env python
-#encoding:utf-8
+# -*-coding:utf-8-*-
 # by whois
 from os.path import exists
 import optparse
 import sys
 
-R = '\033[31m'	# red
-G = '\033[32m'	# green
-B = '\033[34m' 	# blue
-W = '\033[0m' 	# white (normal)
+R = '\033[31m'	 # red
+G = '\033[32m'	 # green
+B = '\033[34m' 	 # blue
+W = '\033[0m' 	 # white (normal)
+
 
 def banner():
-	print B + '''
+    print B + '''
   _______________
  ( Your password? )
   ---------------
@@ -20,6 +21,8 @@ def banner():
              (__)\       )\/\/
                  ||----w |
                  ||     ||
+	[gopass -n xx-xx -b yy-yy-yy]
+	  [sort uniq -->  good job]
 	''' + W
 
 def print_err(err):
@@ -35,7 +38,7 @@ def main():
 	[number.append(n) for n in range(22)]
 	[letter.append(chr(l)) for l in range(97,123)]
 	
-	parser = optparse.OptionParser('[*] -n <name> -b <birthday> -m <mobile> -t <type> -p <passfile> -o <other> -w <save> -h <help>')
+	parser = optparse.OptionParser('n[ame] b[irth] m[obile] w[save] p[sswd] t[ype] o[ther] >')
 	parser.add_option('-n','--name',dest='name',type='string',\
 		help='Specify target name')
 	parser.add_option('-b','--birth',dest='birth',type='string',\
@@ -62,8 +65,8 @@ def main():
 	other  = options.other 
 
 	if name == None and birth == None:
-		print parser.usage	
-		print_err('Specify target name and birth')
+		print parser.print_help()
+		print_err('Specify target name and birth,using --help')
 
 	name_list = name.split('-')
 	# 姓
