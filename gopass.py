@@ -12,7 +12,7 @@ W = '\033[0m' 	 # white (normal)
 
 
 def banner():
-    print B + '''
+	print B + '''
   _______________
  ( Your password? )
   ---------------

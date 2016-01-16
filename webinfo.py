@@ -30,13 +30,18 @@ def banner():
 	    """)
 def get_url(url):
 
-    url_list = []
+	url_list = []
 
-    r    = requests.get(url)
-    r.encoding = 'utf-8'
-    soup = BeautifulSoup(r.text)
+	try:
+		r = requests.get(url)
+	except:
+		print("[-] Please check your network")
+		exit(1)
+
+	r.encoding = 'utf-8'
+	soup = BeautifulSoup(r.text)
     
-    for link in soup.find_all('a'):
+	for link in soup.find_all('a'):
 		try:
 			new_url = urlsplit(link['href'])[1]
 		except:pass
@@ -44,9 +49,9 @@ def get_url(url):
 		if new_url not in url_list and url not in url_list:
 			url_list.append(new_url)
 
-    print("[+] ---> " + url)
-    for x in url_list:print('\t' + x)
-    return url_list
+	print("[+] ---> " + url)
+	for x in url_list:print('\t' + x)
+	return url_list
 
 def url_all(url,tag):
 
