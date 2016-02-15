@@ -1,1 +1,1 @@
-# 在渗透中用到的小脚本
+# Python for hacker

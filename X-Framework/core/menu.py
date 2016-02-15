@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-from core import mycolor
+from core.mycolor import color
 
 def main_info():
-	ston = mycolor.color.blue + "[=" + mycolor.color.end
-	print("")
-	print("\t\t->>" + ston + mycolor.color.green + "King Exploit Framework" + mycolor.color.end)
-	print("\tMMMMMM---==" + ston + "Version :" + mycolor.color.red + "0.4.9" + mycolor.color.end)
-	print("\tMMMMMM---==" + ston + "Powered By :" + mycolor.color.cyan + "kin13" + mycolor.color.end)
-	print("\tMMMMMM---==" + ston + "Available Modules : " + mycolor.color.green + "0" + mycolor.color.end)
-	print("\t\t<<-" + ston + "Update Date : [" + mycolor.color.red + "2015 5 10" + mycolor.color.end + "]")
-	print("\n\n")
+	ston = color.blue + "[=" + color.end
+	print "" 
+	print "\t\t->>" + ston + color.green + "King Exploit Framework" + color.end 
+	print "\tMMMMMM---==" + ston + "Version :" + color.red + "0.4.9" + color.end 
+	print "\tMMMMMM---==" + ston + "Powered By :" + color.cyan + "whois" + color.end 
+	print "\tMMMMMM---==" + ston + "Available Modules : " + color.green + "10" + color.end 
+	print "\t\t<<-" + ston + "Update Date : [" + color.red + "2016 02 03 " + color.end + "]" 
+	print "\n\n" 

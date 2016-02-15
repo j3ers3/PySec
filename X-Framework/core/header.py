@@ -68,7 +68,7 @@ def main_header():
 
     header_5 = mycolor.color.blue + r"""
 	 __________________________
-        < whoami and u >
+        < whoami >
          --------------------------
                 \   ^__^			---
                  \  (oo)\_______		|  \
@@ -83,6 +83,6 @@ def main_header():
      """ + mycolor.color.end
 
     logo = [header_1,header_2,header_3,header_4,header_5]
-    bann = random.choice(logo)
-    print bann
+    banner = random.choice(logo)
+    print banner
 
