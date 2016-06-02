@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 __version__ = "0.2"
 __prog__    = "Searpy"
 __author__  = "Whois"
-
+__date__    = "2016/1/1"
 #########################################################
 
 def zoomeye(search,type1,output):
@@ -47,7 +47,7 @@ def baidu(search):
         payload = {'pn':x,'word':search}
         r = requests.get(url,params=payload)
         html = r.content 
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html,'lxml')
         html = soup.find('div', id="results")
         if not html:
             print "[-] Warning"
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     
     if options.zoomeye == False and options.baidu == False:
-        parser.print_help()
+        print parser.print_help()
         sys.exit(0)
 
     if options.zoomeye:

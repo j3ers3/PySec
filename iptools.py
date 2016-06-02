@@ -2,7 +2,11 @@
 #!encoding:utf-8
 
 import optparse
-from cymruwhois import Client
+try:
+    from cymruwhois import Client
+except:
+    print "[-] Try run pip install cymruwhois"
+    exit(1)
 import os
 
 # 读取ip列表进行查询
@@ -51,7 +55,7 @@ def main():
     ipfile = options.ipfile
 
     if ip == None and ipfile == None:
-	print parser.usage
+	print parser.print_help()
 	exit(1)
 
     if ip and ipfile :

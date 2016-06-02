@@ -1,1 +1,1 @@
-# Python for hacker
+# python 小脚本

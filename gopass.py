@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 # -*-coding:utf-8-*-
-# by whois
 from os.path import exists
 import optparse
 import sys
+
+__author__ = 'whois'
+__date__ = '2016/1/1'
 
 R = '\033[31m'	 # red
 G = '\033[32m'	 # green
 B = '\033[34m' 	 # blue
 W = '\033[0m' 	 # white (normal)
 
+""" 字典生成，攻击个人账号"""
 
 def banner():
 	print B + '''
@@ -138,8 +141,7 @@ def main():
 	if pass_f:
 		if exists(pass_f):
 			with open(pass_f,'r') as f:
-				for x in f.readlines():
-					other_list.append(x.rstrip())
+				[ other_list.append(x.rstrip()) for x in f.readlines() ]
 				
 			dic_list += other_list
 			[dic_list.append(n+o) for n in name_x for o in other_list]
@@ -150,8 +152,7 @@ def main():
 	# 保存
 	if save_f:
 		with open(save_f,'w') as f:
-			for x in dic_list:
-				f.writelines(x+'\n')
+			[f.writelines(x+'\n') for x in dic_list ]
 
 	# 不保持就打印出来	
 	else:
