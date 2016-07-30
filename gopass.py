@@ -33,13 +33,11 @@ def print_err(err):
 
 def main():
 	
-	dic_list = []
-	other_list = []
 	number = ['00','000','001','111','2008','2009','2010','2011','2012','2013','2014','2015']
 	letter = []
 	spe = ['!','@','#','$','%','^','&','*','!@#','!!']
-	[number.append(n) for n in range(22)]
-	[letter.append(chr(l)) for l in range(97,123)]
+	number += [n for n in range(22)]
+	letter += [chr(l) for l in range(97,123)]
 	
 	parser = optparse.OptionParser('n[ame] b[irth] m[obile] w[save] p[sswd] t[ype] o[ther] >')
 	parser.add_option('-n','--name',dest='name',type='string',\
@@ -100,15 +98,16 @@ def main():
 	birth_x = [year,year2,year3,mothday,nyr]
 	
 		
-	[dic_list.append(n) for n in name_x]
-	[dic_list.append(n.upper()) for n in name_x]
-	[dic_list.append(b) for b in birth_x]
-	[dic_list.append(n+b) for n in name_x for b in birth_x]
-	[dic_list.append(b+n) for n in name_x for b in birth_x]
-	[dic_list.append(n.upper()+b) for n in name_x for b in birth_x]
-	[dic_list.append(b+n.upper()) for n in name_x for b in birth_x]
-	[dic_list.append(n+mobile) for n in name_x if mobile]
-	[dic_list.append(n.upper()+mobile) for n in name_x if mobile]
+	#[dic_list.append(n) for n in name_x]
+	dic_list = [n for n in name_x]
+	dic_list += [n.upper() for n in name_x]
+	dic_list += [b for b in birth_x]
+	dic_list += [n+b for n in name_x for b in birth_x]
+	dic_list += [b+n for n in name_x for b in birth_x]
+	dic_list += [n.upper()+b for n in name_x for b in birth_x]
+	dic_list += [b+n.upper() for n in name_x for b in birth_x]
+	dic_list += [n+mobile for n in name_x if mobile]
+	dic_list += [n.upper()+mobile for n in name_x if mobile]
 
 	# 判断是否使用特殊字符
 	if ty:
@@ -132,20 +131,20 @@ def main():
 
 	# 判断是否使用其他
 	if other:
-		[dic_list.append(n+str(other)) for n in name_x]
-		[dic_list.append(b+str(other)) for b in birth_x]
-		[dic_list.append(n+b+str(other)) for n in name_x for b in birth_x]
-		[dic_list.append(str(other))]
+		dic_list += [n+str(other) for n in name_x]
+		dic_list += [b+str(other) for b in birth_x]
+		dic_list += [n+b+str(other) for n in name_x for b in birth_x]
+		dic_list += [str(other)]
 
 	# 判断是否使用弱密码					
 	if pass_f:
 		if exists(pass_f):
 			with open(pass_f,'r') as f:
-				[ other_list.append(x.rstrip()) for x in f.readlines() ]
+				other_list = [x.rstrip() for x in f.readlines() ]
 				
 			dic_list += other_list
-			[dic_list.append(n+o) for n in name_x for o in other_list]
-			[dic_list.append(b+o) for b in birth_x for o in other_list]
+			dic_list += [n+o for n in name_x for o in other_list]
+			dic_list += [b+o for b in birth_x for o in other_list]
  		else:
  			print_err('File not found!')
 

@@ -30,7 +30,7 @@ def do(password):
     for user in user_list:
         auth = (user,password)
         r = requests.get(url, auth=auth)
-        #print "cracking {0}:{1} ".format(user,password)
+        print "cracking {0}:{1} ".format(user,password)
         if r.status_code == 200:
             print "[+] auth-->{0}:{1}".format(user,password)
             exit(1)

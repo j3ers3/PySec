@@ -26,7 +26,7 @@ def banner():
 class Mydic():
     login_list = [
         'admin','admin1','admin123','admin111','admin888','ad','adm','guanli',
-        'houtai','admin.php','admin.asp','admin.jsp','login','login1','admin_login',
+        'houtai','admin.php','admin.asp','admin.jsp','login','login1','admin_login','webadmin',
         'login.asp','login.php','login.jsp','logon','manager','manage','user'
                 ]                                         # 常用后台名列表
 
@@ -61,6 +61,8 @@ def gen():
                 dic_list.append(domain1+sp+lo)
                 dic_list.append(domain2+sp+lo)
 
+        dic_list.append(domain.split('-')[0])
+        dic_list.append(domain.split('-')[1])
         [ dic_list.append(domain1+date) for date in Mydic.date_list ]
         [ dic_list.append(domain2+date) for date in Mydic.date_list ]
         [ dic_list.append(domain1+num) for num in Mydic.num_list ]
@@ -87,15 +89,18 @@ def gen():
         print "[-] Please input number!!!"
         exit(1)
 
-    dict_file = domain+'.txt'       #  用于路径字典
-    dict_file2 = domain+'2.txt'     #  用于爆破用户名或密码
+    dict_file = 'output/'+domain+'.txt'       #  用于路径字典
+    dict_file2 = 'output/'+domain+'2.txt'     #  用于爆破用户名或密码
     
 
+    dict_ok = []
+    [ dict_ok.append(d) for d in dic_list if d not in dict_ok ]
+
     with open(dict_file,'a') as f:
-        [ f.writelines(dic+'\n') for dic in dic_list ]
+        [ f.writelines(dic+'\n') for dic in dict_ok ]
 
     with open(dict_file2,'a') as f:
-        [ f.writelines(dic+'\n') for dic in dic_list if '.' not in dic ]
+        [ f.writelines(dic+'\n') for dic in dict_ok if '.' not in dic ]
 
     print "[+] Generate is ok\t Happy hacking :)"
 
@@ -108,10 +113,14 @@ def scan():
     choose = raw_input("[*] Scan target? (y/n)")
 
     if choose == 'y':
-        good_path = "E:\Tools\PassList\Webpath\good.txt"
-        common_path = "E:\Tools\PassList\Webpath\common.txt"
-        print "[*] Load other web_path {0}\n\t\t\t{1}".format(good_path, common_path)
-
+        try:
+            good_path = "E:\Tools\PassList\Webpath\\fuckyou.txt"
+            common_path = "E:\Tools\PassList\Webpath\\fuckyou2.txt"
+            print "[*] Load other web_path {0}\n\t\t\t{1}".format(good_path, common_path)
+        except:
+            print "[-] Dict not found!"
+            exit(1)
+            
         target = raw_input("[*] Input target (www.xx.com)>>> ")
         try:
             command = "python3 E:\Tools\Information-Gather\Dir-Scan\dirsearch\dirsearch.py -u http://{0} -w {1} -e php --random-agents ".format(target, dict_file)
