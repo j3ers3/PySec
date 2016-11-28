@@ -1,0 +1,5 @@
+def pr():
+    for x in range(100):
+         sys.stdout.write('\r'+str(x)+'%')
+         sys.stdout.flush()
+         sleep(0.1)

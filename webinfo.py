@@ -30,28 +30,26 @@ def banner():
 	    """)
 def get_url(url):
 
-	url_list = []
+    url_list = []
+    try:
+	r = requests.get(url)
+    except:
+        sys.exit("[-] Please check your network")
 
-	try:
-		r = requests.get(url)
-	except:
-		print("[-] Please check your network")
-		exit(1)
-
-	r.encoding = 'utf-8'
-	soup = BeautifulSoup(r.text)
+    r.encoding = 'utf-8'
+    soup = BeautifulSoup(r.text)
     
-	for link in soup.find_all('a'):
-		try:
-			new_url = urlsplit(link['href'])[1]
-		except:pass
+    for link in soup.find_all('a'):
+        try:
+            new_url = urlsplit(link['href'])[1]
+        except:pass
 
-		if new_url not in url_list and url not in url_list:
-			url_list.append(new_url)
+        if new_url not in url_list and url not in url_list:
+            url_list.append(new_url)
 
-	print("[+] ---> " + url)
-	for x in url_list:print('\t' + x)
-	return url_list
+    print("[+] ---> " + url)
+    for x in url_list:print('\t' + x)
+    return url_list
 
 def url_all(url,tag):
 
@@ -60,11 +58,11 @@ def url_all(url,tag):
     soup = BeautifulSoup(r.text)
     
     if tag == 'link':
-		for t in soup.find_all('a'):
-			print(t['href'])
+        for t in soup.find_all('a'):
+            print(t['href'])
     else:
-		for t in soup.find_all(tag):
-			print(t.prettify())
+        for t in soup.find_all(tag):
+            print(t.prettify())
     
 def get_headers(url):
 
@@ -79,7 +77,7 @@ def get_headers(url):
     reg_emails = re.compile('[a-zA-Z0-9.-_]*' + '@' + '[a-zA-Z0-9.-]*')
     
     for email in reg_emails.findall(r.text):
-		print(email)
+        print(email)
 
 def get_ips(domain):
     
@@ -88,8 +86,8 @@ def get_ips(domain):
     print("\n[+] IP found:\n" + '-' * 40 + '\n\n')
     
     for ip in result:
-		print(str(count) + ' : ' + ip[4][0])
-		count += 1    
+        print(str(count) + ' : ' + ip[4][0])
+        count += 1    
 
 def my_shodan(ip):
 
@@ -99,10 +97,9 @@ def my_shodan(ip):
     api = Shodan(SHODAN_API_KEY)
     
     try:
-		host = api.host(ip)
+        host = api.host(ip)
     except:
-		print("\n[-] Shodan err,please check your domain or network!!!")
-		exit(1)
+        sys.exit("\n[-] Shodan err,please check your domain or network!!!")
 
     print("[+] Shodan search:" + '\n' + '-' * 40)
     print(""" 
@@ -114,12 +111,10 @@ def my_shodan(ip):
     for item in host['data']:
         print "Port:%s\nBanner:%s" % (item['port'], item['data'])
  
-
 def main():
 
     banner()
     parser = optparse.OptionParser("[+]Usage: -u <url> | -a [url_all] -t <tag> or <link> | -i [info]")
-    
     parser.add_option('-u','--url',dest='url',type='string',\
 	help='Specify target url')
     parser.add_option('-a','--all',dest='all',\
@@ -134,39 +129,36 @@ def main():
     url = options.url
 
     if options.url == None:
-		print(parser.usage)
-		exit(1)
+        sys.exit(parser.usage)
     
     if options.info:
-		if not options.all and options.tag == None:
-			domain = urlsplit(url)[1]
-			ip	   = socket.gethostbyname(domain)
-			get_headers(url)
-			get_ips(domain)
-			my_shodan(ip)
-			exit(0)
-		else:
-			print(parser.usage)
-			exit(1)
+        if not options.all and options.tag == None:
+            domain = urlsplit(url)[1]
+            ip = socket.gethostbyname(domain)
+            get_headers(url)
+            get_ips(domain)
+            my_shodan(ip)
+            exit(0)
+        else:
+            sys.exit(parser.usage)
+
     if options.all:
-		if options.tag == None:
-			print("[-]Using tag or link")
-			exit(1)
-		else:
-			print("[+] Get all tag for " + url)
-	    	url_all(url,options.tag)
-	    	exit(0)
+        if options.tag == None:
+            sys.exit("[-]Using tag or link")
+        else:
+            print("[+] Get all tag for " + url)
+            url_all(url,options.tag)
+            exit(0)
 
     url_queue = Queue.Queue()
     for q in get_url(url):
-		url_queue.put(q)
+        url_queue.put(q)
 
     while not url_queue.empty():
-		new_link = 'http://' + url_queue.get()
-		try:
-			get_url(new_link)
-		except:pass
+        new_link = 'http://' + url_queue.get()
+        try:
+            get_url(new_link)
+        except:pass
 
 if __name__ == '__main__':
-
     main()

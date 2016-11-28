@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 # encoding:utf-8
+import os
+try:
+    from termcolor import colored
+except:
+    print "[-] pip install termcolor"
+    exit(1)
+
 __author__ = 'whois'
 __date__ = '2016/6/2'
 """
@@ -12,16 +19,14 @@ __date__ = '2016/6/2'
 """
 
 def banner():
-    print """
-        $--------------------------------------------------$
-               
-                            Generate Web Path                          
-                                                v0.3                       
-        $--------------------------------------------------$
-        ====================================================
-            ===> 1. Pinyin mode
-            ===> 2. Normal mode
-    """
+    print colored('\t$'+'-'*50+'$\n','red')
+    print colored('\t\t\t\tGenerate Web Path','green')
+    print colored('\t\t\t\t\t\tv0.4','green')
+    print colored('\t$'+'-'*50+'$','red')
+    print colored('\t'+'='*52,'red')
+    print colored('\t==>','magenta') + colored('1.Pinyin Mode','green')
+    print colored('\t==>','magenta') + colored('2.Normal Mode','green')
+    print colored('\t==>','magenta') + colored('3.Exit\n','red')
 
 class Mydic():
     login_list = [
@@ -44,11 +49,15 @@ def gen():
     dic_list = []
     global dict_file
 
-    number = raw_input("[#] Choose your number >>> ")
-    number = int(number)
+    number = raw_input(colored("[*] Choose your number >>> ",'yellow'))
+    try:
+        number = int(number)
+    except:
+        exit(1)
+
     if number == 1:
-        print "[*] Domain format is xx-yy-zz !"
-        domain = raw_input('[#] Input Domain >>> ')
+        print colored("[*] Domain format is xx-yy-zz !",'green')
+        domain = raw_input(colored('[*] Input Domain >>> ','yellow'))
 
         domain1 = domain.replace('-','')  #全组合
         domain2 = ''.join([ x[0] for x in domain.split('-') ])  #首字母组合
@@ -75,8 +84,8 @@ def gen():
         [ dic_list.append(domain2+date+bak) for date in Mydic.date_list for bak in Mydic.bak_list ]
 
     elif number == 2:
-        print "[*] Domain format is xyz !"
-        domain = raw_input('[#] Input Domain >>> ')
+        print colored("[*] Domain format is xyz !",'green')
+        domain = raw_input(colored('[*] Input Domain >>> ','yellow'))
 
         [ dic_list.append(domain+sp+lo) for sp in Mydic.spe_list for lo in Mydic.login_list]
         [ dic_list.append(domain+date) for date in Mydic.date_list ]
@@ -86,9 +95,11 @@ def gen():
         [ dic_list.append(domain+date+bak) for date in Mydic.date_list for bak in Mydic.bak_list ]
 
     else:
-        print "[-] Please input number!!!"
+        print colored("[-] Please input number!!!",'red')
         exit(1)
 
+    if not os.path.isdir('output'):
+        os.mkdir('output')
     dict_file = 'output/'+domain+'.txt'       #  用于路径字典
     dict_file2 = 'output/'+domain+'2.txt'     #  用于爆破用户名或密码
     
@@ -102,7 +113,7 @@ def gen():
     with open(dict_file2,'a') as f:
         [ f.writelines(dic+'\n') for dic in dict_ok if '.' not in dic ]
 
-    print "[+] Generate is ok\t Happy hacking :)"
+    print "[+] Generate is ok :)"
 
     
 """ 调用dirsearch 进行扫描"""
@@ -116,12 +127,12 @@ def scan():
         try:
             good_path = "E:\Tools\PassList\Webpath\\fuckyou.txt"
             common_path = "E:\Tools\PassList\Webpath\\fuckyou2.txt"
-            print "[*] Load other web_path {0}\n\t\t\t{1}".format(good_path, common_path)
+            print colored("[*] Load other web_path \n\t\t{0}\n\t\t{1}".format(good_path, common_path),'yellow')
         except:
-            print "[-] Dict not found!"
+            print colored("[-] Dict not found!",'red')
             exit(1)
             
-        target = raw_input("[*] Input target (www.xx.com)>>> ")
+        target = raw_input(colored("[*] Input target (www.xx.com)>>> ",'yellow'))
         try:
             command = "python3 E:\Tools\Information-Gather\Dir-Scan\dirsearch\dirsearch.py -u http://{0} -w {1} -e php --random-agents ".format(target, dict_file)
             command2 = "python3 E:\Tools\Information-Gather\Dir-Scan\dirsearch\dirsearch.py -u http://{0} -w {1} -e php --random-agents".format(target, good_path)
@@ -133,9 +144,10 @@ def scan():
 
         except Exception as e:
             print e 
-            print "[-] Please install dirsearch!"
+            print colored("[-] Please install dirsearch!",'red')
             exit(1)
     else:
+        print colored('By','green')
         exit(1)
         
 if __name__ == '__main__':

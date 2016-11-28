@@ -10,13 +10,17 @@ import re
 __author__ = 'whois'
 __date__   = '16/7/26'
 __pro__    = 'get proxies from some websites'
-
+__list__ = ['http://www.samair.ru/proxy/',
+            'http://www.xicidaili.com',
+            'http://spys.ru/',
+            ''
+           ]
 
 with open('pytxt/user-agents.txt','r') as f:
     agents_list = [ line.rstrip() for line in f.readlines()]
 
 HEADERS = {'user-agent':random.choice(agents_list),'referer':'http://www.baidu.com'}
-TARGET = 'http://www.xicidaili.com/nt/'
+TARGET = 'http://www.xicidaili.com/nn/'
 TIMEOUT = 5
 PROXY = ''
 PAGE = 11
@@ -28,8 +32,7 @@ def get_content(url):
     except:
         print "[-] Some error, Please your network or websites"
         exit(1)
-    content = r.content
-    return content
+    return r.content
 
 def file_output(ips):
     o_time = time.strftime('%d-%H-%M', time.localtime())
@@ -67,8 +70,8 @@ def main():
         m = get_proxy(url)
         for k, v in m:
             ip_file = file_output(k + ':' + v + '\n')
-
-    check_proxy(ip_file)
+    check = raw_input('check proxy ..(y/n)')
+    check_proxy(ip_file) if check == 'y' else exit
 
 if __name__ == '__main__':
     main()

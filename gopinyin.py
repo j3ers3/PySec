@@ -46,7 +46,6 @@ def main():
 	if options.filename == None and options.savefile == None and options.mode == None:
 		parser.print_help()
 		sys.exit(0)
-
 	if options.mode == 1:
 		xm_pinyin(options.filename, options.savefile)
 	elif options.mode == 2:
