@@ -5,21 +5,21 @@ import Queue
 from threading import Thread
 import sys
 
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__ = '2016/5/24'
 
-user_list = ['admin']
+user_list = ['admin','tomcat','root']
 
 if len(sys.argv) < 2:
     print "------------------burst auth--------------------"
     print "[*] {0} url dict_file".format(sys.argv[0])
-    print "[*] Default Password is top200pass.txt."
-    print "[*] python goauth.py http://xxx.com/manager/html"
+    print "[*] Default Password is fuckserver.txt."
+    print "[*] python goauth.py http://xxx.com/manager/html password.txt"
     print "[===================><=======================]"
     exit(0)
 
 url = sys.argv[1]
-default_file = 'E:\Tools\PassList\Passwords\\top200pass.txt'
+default_file = 'E:\Tools\PassList\Passwords\\fuckserver.txt'
 
 dict_file = sys.argv[2] if len(sys.argv) == 3 else default_file
 

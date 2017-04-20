@@ -7,7 +7,7 @@ import random
 import time
 import re
 
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__   = '16/7/26'
 __pro__    = 'get proxies from some websites'
 __list__ = ['http://www.samair.ru/proxy/',

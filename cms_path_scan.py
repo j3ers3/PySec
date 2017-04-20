@@ -5,7 +5,7 @@ import urllib2
 import threading
 
 #扫描CMS路径，将源代码下载到本地作为字典进行扫描
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__ = '2015/10/10'
 
 if len(sys.argv) != 2:

@@ -4,6 +4,10 @@ import pinyin
 import sys
 import optparse
 
+__version__ = "0.3"
+__prog__    = "Gopinyin"
+__author__  = "kkk"
+
 # 将姓名转化成首字母缩写
 def szm_pinyin(filename,newfile):
 	
@@ -33,7 +37,12 @@ def xm_pinyin(filename,newfile):
 				ff.writelines(name+'\n')
 
 def main():
-	parser = optparse.OptionParser('usage: %prog <filename> <newfile> [opt]')
+	 parser = optparse.OptionParser(
+                usage="Usage: %prog <filename> <newfile> [opt]",
+                version="%s: v%s (%s)" % (__prog__, __version__, __author__),
+                epilog="Example: xxx ",
+            )
+	parser = optparse.OptionParser('usage: %prog ')
 	parser.add_option('-f','--file',dest='filename',type='string',
 		help='Dict file name')
 	parser.add_option('-w','--save',dest='savefile',type='string',

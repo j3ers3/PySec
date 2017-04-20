@@ -8,39 +8,46 @@ from bs4 import BeautifulSoup
 
 ##########################################################
 
-__version__ = "0.2"
+__version__ = "0.3"
 __prog__    = "Searpy"
-__author__  = "Whois"
+__author__  = "kkk"
 __date__    = "2016/1/1"
 #########################################################
 
 Proxy = {'http':'http://127.0.0.1:8787'}
 Headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 
                 'Accept-Charset':'GB2312,utf-8;q=0.7,*;q=0.7', 
-                'Accept-Language':'zh-cn,zh;q=0.5', 
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, sdch, br',
                 'Cache-Control':'max-age=0', 
                 'Connection':'keep-alive', 
                 'Keep-Alive':'115',
-                    'User-Agent':'Mozilla/5.0 (X11; U; Linux x86; zh-CN; rv:1.9.2.14) Gecko/20110221 Ubuntu/9.9 (maverick) Firefox/3.6.14'}
-Url_list = [] 
+                'Referer': 'https://www.zoomeye.org',
+                'Cookie': '__jsluid=fae27ad046bd22fca181a42209bf2a21; __jsl_clearance=1492699998.338|0|AIrJFUIrEfNaNz%2FeQLHWFMGeHzg%3D; Hm_lvt_e58da53564b1ec3fb2539178e6db042e=1492413982,1492608716,1492673792,1492695782; Hm_lpvt_e58da53564b1ec3fb2539178e6db042e=1492700941',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', 
+            }
+url_list = [] 
 
     
-def zoomeye(search,type1,output):
+def zoomeye(search,mypage,type1,output):
     
-    url = 'https://zoomeye.org/search'
+    url = "https://www.zoomeye.org/search"
    
-    for page in xrange(1,11):
+    for page in xrange(1,mypage+1):
         try:
             payload = {'q':search,'p':str(page),'t':type1}
             r = requests.get(url,params=payload,headers=Headers)
-            print r.url 
-            [Url_list.append(u) for u in rer.findall(r.content) if u not in Url_list ]
+            print r.url
+            [url_list.append(u) for u in rer.findall(r.content) if u not in url_list ]
         except Exception:
             pass
     
     with open(output,'a') as f:        
         for uu in url_list:
-            f.writelines('http://'+uu+'\n')
+            if options.type1 == "web": 
+                f.writelines('http://'+uu+'\n') 
+            else:
+                f.writelines(uu+'\n')
 
 def baidu(search,page,output):
 
@@ -58,15 +65,15 @@ def baidu(search,page,output):
                 try:
                     href=doc.find_all('span')[0].find_all(text=True)[0]
                     url = "http://" + str(href)
-                    if url not in Url_list:
-                        Url_list.append(url)
+                    if url not in url_list:
+                        url_list.append(url)
                 except:
                     pass
-    for u in Url_list:
+    for u in url_list:
         print u
 
     with open(output,'a') as f:  
-        for uu in Url_list:  
+        for uu in url_list:  
             f.writelines(uu+'\n')
 
 def google():
@@ -117,7 +124,7 @@ if __name__ == '__main__':
         else:
             print "[-] Type is error!"
             sys.exit(1)
-        zoomeye(options.search,options.type1,options.output)
+        zoomeye(options.search,options.page,options.type1,options.output)
 
     if options.baidu:
         baidu(options.search,options.page,options.output)    

@@ -6,7 +6,7 @@ from threading import Thread
 from bs4 import BeautifulSoup
 import sys
 
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__ = '2016/5/24'
 
 user_list = ['admin']

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 #!encoding:utf-8
-
 import socket
 import Queue
 from threading import Thread
@@ -9,6 +8,10 @@ from core import mycolor
 import time
 import os
 import signal
+
+__version__ = "0.2"
+__prog__    = "Kscan"
+__author__  = "kkk"
 
 tag_ok   = mycolor.color.blue + '[+]' + mycolor.color.end
 tag_info = mycolor.color.yellow + '[*]' + mycolor.color.end

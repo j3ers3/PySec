@@ -7,7 +7,7 @@ except:
     print "[-] pip install termcolor"
     exit(1)
 
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__ = '2016/6/2'
 """
     根据域名来生成字典
@@ -35,7 +35,7 @@ class Mydic():
         'login.asp','login.php','login.jsp','logon','manager','manage','user'
                 ]                                         # 常用后台名列表
 
-    bak_list = ['.zip','.rar','.bak','.tar.gz','.7z']  # 后缀名列表
+    bak_list = ['.zip','.rar','.bak','.tar.gz','.7z','.old']  # 后缀名列表
 
     date_list = [ str(d) for d in range(1990,2017) ]  # 成年份列表
 
@@ -101,7 +101,7 @@ def gen():
     if not os.path.isdir('output'):
         os.mkdir('output')
     dict_file = 'output/'+domain+'.txt'       #  用于路径字典
-    dict_file2 = 'output/'+domain+'2.txt'     #  用于爆破用户名或密码
+    dict_file2 = 'output/'+domain+'2.txt'     #  用于爆破后台用户名或密码
     
 
     dict_ok = []

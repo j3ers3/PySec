@@ -11,7 +11,7 @@ def banner():
         +                                                           +
         +                   S2-032 Remote Code Excution             +
         +                   target -> http://xxx.com/xx.action      +
-        +                                              by whois     +
+        +                                              by kkk     +
         +                                              2016/4/27    +
         +--------------------------------------------------------->>>
     """

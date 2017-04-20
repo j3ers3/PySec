@@ -4,8 +4,9 @@ from os.path import exists
 import optparse
 import sys
 
-__author__ = 'whois'
+__author__ = 'kkk'
 __date__ = '2016/1/1'
+__version__ = '0.1v'
 
 R = '\033[31m'	 # red
 G = '\033[32m'	 # green
@@ -13,6 +14,11 @@ B = '\033[34m' 	 # blue
 W = '\033[0m' 	 # white (normal)
 
 """ 字典生成，攻击个人账号"""
+"""  
+	准备加入身份证
+	优化字典 
+
+"""
 
 def banner():
 	print B + '''
