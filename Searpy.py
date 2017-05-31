@@ -5,10 +5,11 @@ import re
 import sys
 import optparse
 from bs4 import BeautifulSoup
+from urllib import quote
 
 ##########################################################
 
-__version__ = "0.3"
+__version__ = "0.4"
 __prog__    = "Searpy"
 __author__  = "kkk"
 __date__    = "2016/1/1"
@@ -28,6 +29,9 @@ Headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q
             }
 url_list = [] 
 
+def save_fun(save_file,content):
+    with open(save_file, 'a') as f:
+        f.writelines(content + '\n')
     
 def zoomeye(search,mypage,type1,output):
     
@@ -49,32 +53,18 @@ def zoomeye(search,mypage,type1,output):
             else:
                 f.writelines(uu+'\n')
 
-def baidu(search,page,output):
+def baidu(search,page):
 
-    for x in range(0,(page+1)*10,10):
-        url = 'http://wap.baidu.com/s'   
-        payload = {'pn':x,'word':search}
-        r = requests.get(url,params=payload,headers=Headers)
-        soup = BeautifulSoup(r.content,'lxml')
-        html = soup.find('div', id="results")
-        html_doc = html.find_all('div', class_="c-showurl") if html else "[-] Error..."
-        if not html_doc:
-            print "[-] Warning"
-        else:
-            for doc in html_doc:
-                try:
-                    href=doc.find_all('span')[0].find_all(text=True)[0]
-                    url = "http://" + str(href)
-                    if url not in url_list:
-                        url_list.append(url)
-                except:
-                    pass
-    for u in url_list:
-        print u
-
-    with open(output,'a') as f:  
-        for uu in url_list:  
-            f.writelines(uu+'\n')
+    for n in range(0,(page+1)*10,10):
+        base_url = 'https://www.baidu.com/s?wd=' + str(quote(search)) + '&oq=' + str(quote(search)) + '&ie=utf-8' + '&pn=' + str(n)
+        try:
+            r = requests.get(base_url,headers=Headers)
+            soup = BeautifulSoup(r.text, "html.parser")
+            for a in soup.select('div.c-container > h3 > a'):
+                url = requests.get(a['href'], headers=Headers,timeout=4).url
+                yield url
+        except:
+            yield None
 
 def google():
    """ url = "http://www.google.com/search?start=" + str(page) + "&q" + search + "&hl=en"
@@ -103,7 +93,7 @@ if __name__ == '__main__':
             help="Using Google Search")
     parser.add_option("-s", "--search", dest="search",type="string",
             help="Specify Keyword")
-    parser.add_option("-o", "--output", dest="output", default="output.txt",
+    parser.add_option("-o", "--output", dest="output", default="search_output.txt",
             type="string", help="Specify output file default output.txt")
     parser.add_option("-t", "--type", dest="type1", default="web",
             type="string", help="Zoomeye Search Type default [web],[host]")
@@ -127,7 +117,13 @@ if __name__ == '__main__':
         zoomeye(options.search,options.page,options.type1,options.output)
 
     if options.baidu:
-        baidu(options.search,options.page,options.output)    
+        for url in baidu(options.search,options.page):
+            if url:
+                print url
+                save_fun(options.output, url)
+            else:
+                pass
+
 
     if options.google:
         pass

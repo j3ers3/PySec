@@ -49,7 +49,7 @@ def scan():
 
 def main():
     threads_list = []
-    threads = 10
+    threads = 12
 
     for i in range(threads):
         t = Thread(target=scan)
