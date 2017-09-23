@@ -28,9 +28,11 @@ def banner():
 		        ||----w |
 		        ||     ||  
 	    """)
+
 def get_url(url):
 
     url_list = []
+
     try:
 	r = requests.get(url)
     except:
@@ -48,7 +50,9 @@ def get_url(url):
             url_list.append(new_url)
 
     print("[+] ---> " + url)
+
     for x in url_list:print('\t' + x)
+    
     return url_list
 
 def url_all(url,tag):

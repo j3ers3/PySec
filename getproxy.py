@@ -20,9 +20,9 @@ with open('pytxt/user-agents.txt','r') as f:
 
 HEADERS = {'user-agent':random.choice(agents_list),'referer':'http://www.baidu.com'}
 TARGET = 'http://www.xicidaili.com/nn/'
-TIMEOUT = 6
+TIMEOUT = 8
 PROXY = ''
-PAGE = 2
+PAGE = 6
 output = 'output/proxy_ips.txt'
 
 def get_content(url):
@@ -35,7 +35,6 @@ def get_content(url):
     return r.content
 
 def file_output(ips):
-    print output
     with open(output,'a') as f:
         f.writelines(ips)
 
@@ -73,10 +72,10 @@ def main():
         proxy_ip = Queue.Queue()
         with open(output,'r') as f:
             for line in f.readlines():
-                proxy_ip.put('http://' + u.rstrip())
+                proxy_ip.put('http://' + line.rstrip())
 
         threads_list = []
-        threads = 15
+        threads = 14
         for i in range(threads):
             t = Thread(target=check)
             t.start()

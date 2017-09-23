@@ -9,6 +9,8 @@ except:
 
 __author__ = 'kkk'
 __date__ = '2016/6/2'
+__xxx__ = 'Linux'
+
 """
     根据域名来生成字典
         1.后台地址   name_admin

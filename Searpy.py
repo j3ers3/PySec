@@ -29,7 +29,7 @@ Headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q
             }
 url_list = [] 
 
-def save_fun(save_file,content):
+def save_fun(save_file, content):
     with open(save_file, 'a') as f:
         f.writelines(content + '\n')
     

@@ -11,7 +11,7 @@ import signal
 
 __version__ = "0.2"
 __prog__    = "Kscan"
-__author__  = "kkk"
+__author__  = "whois"
 
 tag_ok   = mycolor.color.blue + '[+]' + mycolor.color.end
 tag_info = mycolor.color.yellow + '[*]' + mycolor.color.end

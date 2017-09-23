@@ -4,9 +4,10 @@ from os.path import exists
 import optparse
 import sys
 
-__author__ = 'kkk'
+__author__ = 'whois'
+__prog__ = 'genpass'
+__version__ = '0.2'
 __date__ = '2016/1/1'
-__version__ = '0.1v'
 
 R = '\033[31m'	 # red
 G = '\033[32m'	 # green
@@ -21,7 +22,7 @@ W = '\033[0m' 	 # white (normal)
 """
 
 def banner():
-	print B + '''
+	print G + '''
            _,---.       _,.---._          _ __       ,---.         ,-,--.     ,-,--.  
        _.='.'-,  \    ,-.' , -  `.     .-`.' ,`.   .--.'  \      ,-.'-  _\  ,-.'-  _\ 
       /==.'-     /   /==/_,  ,  - \   /==/, -   \  \==\-/\ \    /==/_ ,_.' /==/_ ,_.' 
@@ -40,13 +41,17 @@ def print_err(err):
 
 def main():
 	
-	number = ['00','000','001','111','2008','2009','2010','2011','2012','2013','2014','2015']
+	number = ['00','000','001','111','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017']
 	letter = []
 	spe = ['!','@','#','$','%','^','&','*','!@#','!!']
 	number += [n for n in range(22)]
 	letter += [chr(l) for l in range(97,123)]
 	
-	parser = optparse.OptionParser('n[ame] b[irth] m[obile] w[save] p[sswd] t[ype] o[ther] >')
+	parser = optparse.OptionParser(
+		usage="Usage: genpass.py xxx",
+		version="%s: v%s (%s)" % (__prog__, __version__, __author__),
+		epilog="Example: genpass -n zhang-wei -b 1991-01-02  -m 138888888 -t all -o baidu -p top100.txt -w zhangwei.txt",
+	)
 	parser.add_option('-n','--name',dest='name',type='string',\
 		help='Specify target name')
 	parser.add_option('-b','--birth',dest='birth',type='string',\
@@ -75,33 +80,36 @@ def main():
 	if name == None and birth == None:
 		print parser.print_help()
 		print_err('Specify target name and birth,using --help')
-
+		exit(1)
+		
 	name_list = name.split('-')
-	# 姓
+
 	xing = name_list[0]
-	# 名
+
 	ming = ''.join(x for x in name_list[1:])
-	# 姓名结合
+
 	xm = name.replace('-','')
-	# 姓名首字母
+
 	szm = ''.join(x[0] for x in name_list)
-	# 姓全称名缩写
+
 	xm2 = xing + ''.join(x[0] for x in name_list[1:]) 
-	# zhang,wei,zhangwei,zhangw,zw
+
+	# zhang-wei => [zhang, wei, zhangwei, zhangw, zw]
 	name_x = [xing,ming,xm,xm2,szm]
 
 	birth_list = birth.split('-')
-	# 年
+
 	year = birth_list[0]
-	# 年月组合
+
 	year2 = year + birth_list[1]
-	# 月日
+
 	mothday = ''.join(x for x in birth_list[1:])
-	# 年后两位与月日结合
+
 	year3 = year[2:] + mothday
-	# 年月日
+
 	nyr = birth.replace('-','')
-	# 1990,199001,900122,0122,19900122
+
+	# 1990-01-22 => [1990, 199001, 900122, 0122, 19900122]
 	birth_x = [year,year2,year3,mothday,nyr]
 	
 		
