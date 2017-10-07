@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#!encoding:utf-8
+# encoding:utf8
 
 '''
     这只是一个分析网页源码的小程序
@@ -13,30 +13,52 @@ import requests
 import Queue
 from urlparse import urlsplit
 import optparse
-import re,sys
+import re
+import sys
 import socket
+import random
+
+col_pur   = '\033[95m'
+col_end   = '\033[0m' 
 
 def banner():
+       print col_pur + """
+                             _________-----_____ 
+              _____------                __        ------_ 
+   ___----                 ___------                       \ 
+       ----________          ----                           \ 
+                        -----__    |                     _____ ) 
+                               __-                        /#####\ 
+              _______-----    ___--                 \####/)\ 
+      ------_______      ---____                     \##/  / 
+                        -----__    \ --      _             --   /\   
+                                 --__--__     \_____/        \_/\ 
+                                          ----|       /              | 
+                                                |     |___________| 
+                                                 |  |   |  | ((_(_)| )_) 
+                                                 |     |  \_((_(_)|/(_) 
+                                                   \                   ( 
+                                                     \___________) 
+                                                          /
+   | Version                : 1.0                      /
+   | Auth                   : whois                     /
+   | Codename             : pinfo                   /
+   | Follow me on Github  : @j3ers3              /
+   ------------------------------------------------""" + col_end
 
-    print("""
-         __________________
-        < WebInfo by whois >
-	 ------------------
-	        \   ^__^
-		 \  (oo)\_______
-		    (__)\       )\/\/
-		        ||----w |
-		        ||     ||  
-	    """)
+
+with open('E:\Tools\Scripts\PySec\pytxt\user-agents.txt','r') as f:
+    agents_list = [ line.rstrip() for line in f.readlines()]
 
 def get_url(url):
 
+    HEADERS = {'user-agent':random.choice(agents_list)}
     url_list = []
 
     try:
-	r = requests.get(url)
+	r = requests.get(url, header=HEADERS, timeout=8)
     except:
-        sys.exit("[-] Please check your network")
+        sys.exit("[x] Please check your network")
 
     r.encoding = 'utf-8'
     soup = BeautifulSoup(r.text)
@@ -44,14 +66,16 @@ def get_url(url):
     for link in soup.find_all('a'):
         try:
             new_url = urlsplit(link['href'])[1]
-        except:pass
+        except:
+            pass
 
         if new_url not in url_list and url not in url_list:
             url_list.append(new_url)
 
     print("[+] ---> " + url)
 
-    for x in url_list:print('\t' + x)
+    for x in url_list:
+        print('\t' + x)
     
     return url_list
 
@@ -117,7 +141,6 @@ def my_shodan(ip):
  
 def main():
 
-    banner()
     parser = optparse.OptionParser("[+]Usage: -u <url> | -a [url_all] -t <tag> or <link> | -i [info]")
     parser.add_option('-u','--url',dest='url',type='string',\
 	help='Specify target url')
@@ -165,4 +188,5 @@ def main():
         except:pass
 
 if __name__ == '__main__':
+    banner()
     main()
