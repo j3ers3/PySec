@@ -12,12 +12,27 @@ from urllib import quote
 __version__ = "1.0"
 __prog__    = "Searpy"
 __author__  = "whois"
-__date__    = "2016/1/1"
+__date__  = "2016/01/01"
+
 #########################################################
 
-banner = """
-    
-"""
+col_purp = '\033[95m'
+col_cyan = '\033[96m'   
+col_end  = '\033[0m'  
+
+banner = col_purp + """
+****************************************************
+ ____                              
+/ ___|  ___  __ _ _ __ _ __  _   _ 
+\___ \ / _ \/ _` | '__| '_ \| | | |
+ ___) |  __/ (_| | |  | |_) | |_| |
+|____/ \___|\__,_|_|  | .__/ \__, |
+                      |_|    |___/\n""" + col_cyan + """     
+
+                            Searpy Ver. 1.0
+                            Update 2017 10 08                                         
+                            Coded by whois""" + col_purp + """
+****************************************************\n""" + col_end    
 
 # set shadowsocks proxy
 Proxy = {
@@ -42,7 +57,9 @@ def save_file(save_file, content):
     with open(save_file, 'a') as f:
         f.writelines(content + '\n')
 
-# www.zoomeye.com    
+
+# 钟馗之眼
+# 已经不行了，等待下一步处理   
 def zoomeye(search,mypage,type1,output):
     
     url = "https://www.zoomeye.org/search"
@@ -64,13 +81,15 @@ def zoomeye(search,mypage,type1,output):
                 f.writelines(uu+'\n')
 
 
-# www.baidu.com
+# 百度搜索
 def baidu(search,page):
 
-    for n in range(0, page*10, 10):
+    for n in xrange(0, page*10, 10):
         base_url = 'https://www.baidu.com/s?wd=' + str(quote(search)) + '&oq=' + str(quote(search)) + '&ie=utf-8' + '&pn=' + str(n)
+        print base_url
         try:
             r = requests.get(base_url, headers=Headers)
+            print r.url
             soup = BeautifulSoup(r.text, "html.parser")
             for a in soup.select('div.c-container > h3 > a'):
                 url = requests.get(a['href'], headers=Headers,timeout=5).url
@@ -79,10 +98,10 @@ def baidu(search,page):
             yield None
 
 
-# www.so.com
+# 360搜索
 def so(search, page):
 
-    for n in range(1, page+1):
+    for n in xrange(1, page+1):
         base_url = 'https://www.so.com/s?q=' + str(quote(search)) + '&pn=' + str(n) + '&fr=so.com'
         try:
             r = requests.get(base_url, headers=Headers)
@@ -95,10 +114,26 @@ def so(search, page):
             yield None
 
 
-# www.google.com.hk
+# 必应搜索
+def bing(search, page):
+
+    for n in xrange(1, (page*10)+1, 10):
+        base_url = 'http://cn.bing.com/search?q=' + str(quote(search)) + '&first=' + str(n)
+        try:
+            r = requests.get(base_url, headers=Headers)
+            soup = BeautifulSoup(r.text, "html.parser")
+            for a in soup.select('li.b_algo > h2 > a'):
+                url = a['href']
+                yield url
+        except:
+            yield None
+
+
+# Google搜索
+# 存在一些bug，等待修复
 def google(search, page):
 
-    for n in range(0, 10*page, 10):
+    for n in xrange(0, 10*page, 10):
         base_url = 'https://www.google.com.hk/search?safe=strict&q=' + str(quote(search)) + '&oq=' + str(quote(search)) + 'start=' + str(n)
         try:
             r = requests.get(base_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}, proxies=Proxy, timeout=16)
@@ -107,40 +142,43 @@ def google(search, page):
                 url = a.text
                 yield url
         except Exception as e:
-            print e
             yield None
 
 
 
 if __name__ == '__main__':
     
+    print banner
     parser = optparse.OptionParser(
-                usage="Usage: %prog [OPTION]",
+                usage="Usage: %prog [options]",
                 version="%s: v%s (%s)" % (__prog__, __version__, __author__),
-                epilog="Example: Searpy -b -s site:baidu.com -p 10 -o file.txt ",
+                epilog="""Example: Searpy -b -s site:baidu.com -p 10 -o file.txt
+                          Example: Searpy --bing -s "aa inurl:action" -p10 -o file.txt """,
             )
     
     parser.add_option("-z", "--zoomeye", action='store_true', dest="zoomeye",
-            help="Using Zoomeye Search")
+            help="Using zoomeye search")
     parser.add_option("-b", "--baidu", action="store_true", dest="baidu",
-            help="Using Baidu Search")
+            help="Using baidu search")
     parser.add_option("-g", "--google", action="store_true", dest="google",
-            help="Using Google Search")
-    parser.add_option("-x", "--so", action="store_true", dest="so",
-            help="Using 360So Search")
+            help="Using google search")
+    parser.add_option("-x", "--360so", action="store_true", dest="so",
+            help="Using 360so search")
+    parser.add_option("-i", "--bing", action="store_true", dest="bing",
+            help="Using bing search")
     parser.add_option("-s", "--search", dest="search",type="string",
             help="Specify Keyword")
     parser.add_option("-o", "--output", dest="output",
             type="string", help="Specify output file default output.txt")
     parser.add_option("-t", "--type", dest="type1", default="web",
             type="string", help="Zoomeye Search Type default [web],[host]")
-    parser.add_option("-p","--page",dest="page",default=100,
-            type="int", help="Baidu &Google page default 10")
+    parser.add_option("-p","--page",dest="page",default=2,
+            type="int", help="Search Engine page default 2")
 
     (options, args) = parser.parse_args()
-    
-    if options.zoomeye == None and options.baidu == None and options.so == None and options.google == None:
-        parser.print_help()
+
+    if options.zoomeye == None and options.baidu == None and options.so == None and options.google == None and options.bing == None:
+        print "[x] Please use -h to see help"
         sys.exit(0)
 
     if options.zoomeye:
@@ -169,11 +207,24 @@ if __name__ == '__main__':
             else:
                 print url
 
-    if options.google:
-        for url in google(options.search, options.page):
+    if options.bing:
+        for url in bing(options.search, options.page):
             if options.output:
                 print url
                 save_file(options.output, url)
             else:
                 print url
 
+    if options.google:
+        for url in google(options.search, options.page):
+            if options.output:
+                try:
+                    print url
+                    save_file(options.output, url)
+                except:
+                    pass
+            else:
+                try:
+                    print url
+                except:
+                    pass
