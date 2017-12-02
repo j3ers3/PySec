@@ -6,7 +6,7 @@ from threading import Thread
 from random import choice
 import sys
 
-__author__ = 'kkk'
+__author__ = 'whois'
 __date__ = '2016/5/24'
 
 user_list = ['admin','tomcat']

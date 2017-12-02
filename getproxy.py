@@ -7,7 +7,7 @@ import random
 import time
 import re
 
-__author__ = 'kkk'
+__author__ = 'whois'
 __date__   = '16/7/26'
 __pro__    = 'get proxies from some websites'
 __list__    = [
@@ -22,7 +22,7 @@ HEADERS = {'user-agent':random.choice(agents_list),'referer':'http://www.baidu.c
 TARGET = 'http://www.xicidaili.com/nn/'
 TIMEOUT = 8
 PROXY = ''
-PAGE = 6
+PAGE = 12
 output = 'output/proxy_ips.txt'
 
 def get_content(url):
@@ -87,4 +87,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-        

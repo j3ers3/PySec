@@ -28,8 +28,8 @@ if len(sys.argv) == 1:
     exit(1)
 
 TARGET = sys.argv[1]
-IPFILES = sys.argv[2] if len(sys.argv) >= 3 else 'output/proxy_ip.txt'
-WEBPATH = sys.argv[3] if len(sys.argv) == 4 else "e:\Tools\PassList\Webpath\\fuckyou.txt"
+IPFILES = 'output/proxy_ip.txt'
+WEBPATH = sys.argv[2] if len(sys.argv) == 3 else "e:\Tools\PassList\Webpath\\fuckyou.txt"
 
 with open(IPFILES,'r') as f:
     proxy_ip_list = [ line.rstrip() for line in f.readlines() ]
@@ -47,14 +47,13 @@ def scan(web_file):
 
     try:
         r = requests.get(url, headers=HEADERS,timeout=10, proxies={'http':proxy_ip})
-
         if r.status_code not in [404,400,500,501,502,503,504,505]:
             print "[{0}]\t{1}\t{2}\t{3}".format(r.status_code, len(r.content), url, proxy_ip)
             #print "[" + str(r.status_code) + "] " + " [" + len(r.content) + "] " + url
-        else:
+       # else:
             #sys.stdout.write('\r{0} '.format(web_file))
-            pass
-    except:
+        #    pass
+    except Exception as e:
         pass
 
 def attack():
@@ -63,7 +62,7 @@ def attack():
 
 def main():
     threads_list = []
-    threads = 8
+    threads = 5
 
     for i in range(threads):
         t = Thread(target=attack)

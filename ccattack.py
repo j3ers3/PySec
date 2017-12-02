@@ -15,7 +15,7 @@ with open('pytxt/user-agents.txt','r') as f:
 if len(sys.argv) == 1:
     print "[+]-----------------CC Attack----------------[+]"
     print ""
-    print "[*] python {0} [target] <proxy_ip>".format(sys.argv[0])
+    print "[*] python {0} [url] <proxy_ip>".format(sys.argv[0])
     exit(1)
 
 TARGET = sys.argv[1]

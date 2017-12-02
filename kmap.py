@@ -1,56 +1,55 @@
 #!/usr/bin/env python
-#!encoding:utf-8
+# encoding:utf8
+from pytxt import mycolor
+from threading import Thread
 import socket
 import Queue
-from threading import Thread
 import optparse
-from core import mycolor
 import time
 import os
 import signal
 
-__version__ = "0.2"
-__prog__    = "Kscan"
+__version__ = "0.3"
+__prog__    = "kmap"
 __author__  = "whois"
 
 tag_ok   = mycolor.color.blue + '[+]' + mycolor.color.end
 tag_info = mycolor.color.yellow + '[*]' + mycolor.color.end
-
-def scan(domain,target_port):	
+def scan(domain, target_port):
 
 	while not target_port.empty():
 		port = target_port.get()
-		client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+	    	client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		socket.setdefaulttimeout(1)
 
 		try:
 			client.connect((domain,port))
-			
-			if port in [80,81,82,443,8080,8088,8008,8843]:	
-				client.send("GET / HTTP/1.0\r\n\r\n")	
+
+			if port in [80, 81, 82, 88, 443, 8000, 8001, 8080, 8088, 8008, 8888, 8843]:
+				client.send("GET / HTTP/1.0\r\n\r\n")
 			else:
 				client.send("scan")
-		
+
 			banner = mycolor.color.cyan + client.recv(512) + mycolor.color.end
-	    
+
 			if banner:
 				print(tag_ok + mycolor.color.green + " Port:%s is open \n" %port + banner)
 			else:
 				print(tag_ok + mycolor.color.green + "  Port:%s is open \n" %port)
- 
+
 		except Exception,e: pass
 
 		client.close()
 
 def kill_me(a,b):
-      
+
     print "[!] End!"
     pid = os.getpid()
     os.system('kill -9 ' + str(pid))
 
 def main():
-    
-	parser = optparse.OptionParser("Usage: ./kscan.py -d <domain> -t <threads> -v ")
+
+    	parser = optparse.OptionParser("Usage: kmap.py -d <domain> -t <threads> -v ")
 	parser.add_option('-d','--domain',dest='domain',type='string',\
 	help='specify target domain')
 	parser.add_option('-t','--threads',dest='threads',type='int',\
@@ -68,10 +67,10 @@ def main():
 		exit(0)
 
 	if threads == None:
-		threads = 30
+		threads = 10
 
 	port_queue = Queue.Queue()
-	port_list = [21,22,23,25,53,80,81,82,110,111,139,161,199,443,445,3306,1443,1521,3389,8008,8080,8088,8843]
+	port_list = [21,22,23,25,53,67,68,69,80,88,110,111,389,443,445,488,512,514,873,901,1080,1024,1089,1090,1158,1352,1433,1434,1521,2181,2375,2601,3128,3306,3389,4848,4444,5432,5632,5900,5984,6082,6379,6666,6667,7001,7002,8000,8001,8008,8069,8080,8081,8083,8087,8161,8443,8686,8649,8787,8888,9090,9200,9300,11211,22222,27017,27018,33389,50000,50070]
 
 	for p in port_list:
 		port_queue.put(p)
@@ -83,7 +82,7 @@ def main():
 
 	for t in range(threads):
 		Thread(target=scan,args=(domain,port_queue,)).start()
-		signal.signal(signal.SIGINT,kill_me) 
+		signal.signal(signal.SIGINT,kill_me)
 
 if __name__ == "__main__":
 	main()

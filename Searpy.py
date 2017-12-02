@@ -6,6 +6,16 @@ import sys
 import optparse
 from bs4 import BeautifulSoup
 from urllib import quote
+from random import choice
+
+"""
+    >>> from Searpy import baidu
+
+    >>> b = baidu('powered by discuz', 1)
+
+    >>> for url in b:print url
+
+"""
 
 ##########################################################
 
@@ -17,22 +27,22 @@ __date__  = "2016/01/01"
 #########################################################
 
 col_purp = '\033[95m'
-col_cyan = '\033[96m'   
-col_end  = '\033[0m'  
+col_cyan = '\033[96m'
+col_end  = '\033[0m'
 
 banner = col_purp + """
 ****************************************************
- ____                              
-/ ___|  ___  __ _ _ __ _ __  _   _ 
+ ____
+/ ___|  ___  __ _ _ __ _ __  _   _
 \___ \ / _ \/ _` | '__| '_ \| | | |
  ___) |  __/ (_| | |  | |_) | |_| |
 |____/ \___|\__,_|_|  | .__/ \__, |
-                      |_|    |___/\n""" + col_cyan + """     
+                      |_|    |___/\n""" + col_cyan + """
 
                             Searpy Ver. 1.0
-                            Update 2017 10 08                                         
+                            Update 2017 10 08
                             Coded by whois""" + col_purp + """
-****************************************************\n""" + col_end    
+****************************************************\n""" + col_end
 
 # set shadowsocks proxy
 Proxy = {
@@ -40,30 +50,36 @@ Proxy = {
     'https':'http://127.0.0.1:1080'
     }
 
+agents_list = ['Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14',
+                'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240',
+            ]
+
 Headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 
                 'Accept-Charset':'GB2312,utf-8;q=0.7,*;q=0.7', 
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Encoding': 'gzip, deflate, sdch, br',
                 'Cache-Control':'max-age=0', 
                 'Connection':'keep-alive', 
-                'Referer': 'https://www.zoomeye.org',
+                'Referer': 'https://www.baidu.com',
                 'Cookie': '__jsluid=fae27ad046bd22fca181a42209bf2a21;',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', 
+                'User-Agent': choice(agents_list), 
             }
-
-url_list = [] 
 
 def save_file(save_file, content):
     with open(save_file, 'a') as f:
-        f.writelines(content + '\n')
+        try:
+            f.writelines(content + '\n')
+        except:
+            pass
 
 
 # 钟馗之眼
-# 已经不行了，等待下一步处理   
+# 已经不行了，等待下一步处理
 def zoomeye(search,mypage,type1,output):
-    
+
     url = "https://www.zoomeye.org/search"
-   
+
     for page in xrange(1,mypage+1):
         try:
             payload = {'q':search,'p':str(page),'t':type1}
@@ -72,11 +88,11 @@ def zoomeye(search,mypage,type1,output):
             [ url_list.append(u) for u in rer.findall(r.content) if u not in url_list ]
         except Exception:
             pass
-    
-    with open(output,'a') as f:        
+
+    with open(output,'a') as f:
         for uu in url_list:
-            if options.type1 == "web": 
-                f.writelines('http://'+uu+'\n') 
+            if options.type1 == "web":
+                f.writelines('http://'+uu+'\n')
             else:
                 f.writelines(uu+'\n')
 
@@ -86,13 +102,11 @@ def baidu(search,page):
 
     for n in xrange(0, page*10, 10):
         base_url = 'https://www.baidu.com/s?wd=' + str(quote(search)) + '&oq=' + str(quote(search)) + '&ie=utf-8' + '&pn=' + str(n)
-        print base_url
         try:
             r = requests.get(base_url, headers=Headers)
-            print r.url
             soup = BeautifulSoup(r.text, "html.parser")
             for a in soup.select('div.c-container > h3 > a'):
-                url = requests.get(a['href'], headers=Headers,timeout=5).url
+                url = requests.get(a['href'], headers=Headers, timeout=5).url
                 yield url
         except:
             yield None
@@ -136,10 +150,12 @@ def google(search, page):
     for n in xrange(0, 10*page, 10):
         base_url = 'https://www.google.com.hk/search?safe=strict&q=' + str(quote(search)) + '&oq=' + str(quote(search)) + 'start=' + str(n)
         try:
-            r = requests.get(base_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}, proxies=Proxy, timeout=16)
+            r = requests.get(base_url, headers={'User-Agent': choice(agents_list)}, proxies=Proxy, timeout=16)
             soup = BeautifulSoup(r.text, "html.parser")
             for a in soup.select('div.kv cite'):
                 url = a.text
+                if 'http' not in url:
+                    url = 'http://' + url
                 yield url
         except Exception as e:
             yield None
@@ -147,7 +163,7 @@ def google(search, page):
 
 
 if __name__ == '__main__':
-    
+
     print banner
     parser = optparse.OptionParser(
                 usage="Usage: %prog [options]",
@@ -155,7 +171,7 @@ if __name__ == '__main__':
                 epilog="""Example: Searpy -b -s site:baidu.com -p 10 -o file.txt
                           Example: Searpy --bing -s "aa inurl:action" -p10 -o file.txt """,
             )
-    
+
     parser.add_option("-z", "--zoomeye", action='store_true', dest="zoomeye",
             help="Using zoomeye search")
     parser.add_option("-b", "--baidu", action="store_true", dest="baidu",
@@ -182,7 +198,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     if options.zoomeye:
-        if options.type1 == "host": 
+        if options.type1 == "host":
             rer = re.compile(r'<a class="ip" href="\/search\?q=ip:.*?">(.*?)</a>')
         elif options.type1 == "web":
             rer = re.compile(r'<p class="domain">(.*?)</p>')
