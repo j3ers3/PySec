@@ -34,7 +34,7 @@ if __name__ == "__main__":
         print """
                 +----------------------------------------+
                 |                Map Your Network          |
-                |                           by kkk              |
+                |                           by whois              |
                 +----------------------------------------+
             """
         print "[*] Usage: python nscan.py ip/24"

@@ -12,6 +12,7 @@ import signal
 __version__ = "0.3"
 __prog__    = "kmap"
 __author__  = "whois"
+__say__ = "玩玩而已"
 
 tag_ok   = mycolor.color.blue + '[+]' + mycolor.color.end
 tag_info = mycolor.color.yellow + '[*]' + mycolor.color.end
