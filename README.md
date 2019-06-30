@@ -1,32 +1,36 @@
-# Hacking with python  [![Python 2.7](https://img.shields.io/badge/Python-2.7-yellow.svg)](http://www.python.org/download/)
+# Hacking with python  [![Python](https://img.shields.io/badge/Python-red.svg)](http://www.python.org/download/)
 
-*  pydirscan.py => web目录扫描，通过随机ip绕过waf
+-  cscan.py => C段快速web扫描
 
-*  sqli-mysql.py\sqli-mssql.py => SQL时间注入
+-  mmap.py => 利用masscan和nmap快速全端口扫描
 
-* sqli-mssql-second-order.py  => SQL二阶注入
+-  pydirscan.py => web目录扫描，通过随机ip绕过waf
 
-* rkeylogger.py => 简单的键盘监听器
+-  sqli-mysql.py\sqli-mssql.py => SQL时间注入
 
-* captcha.py => 打码平台来爆破验证码
+- sqli-mssql-second-order.py  => SQL二阶注入
 
-* lotus.py   => Lotus Notes密码抓取并利用hashcat来爆破
+- rkeylogger.py => 简单的键盘监听器
 
-* pyshellcode => bypass AV
+- captcha.py => 打码平台来爆破验证码
 
-*  pyauth.py => 破解auth认证
+- lotus.py   => Lotus Notes密码抓取并利用hashcat来爆破
 
-*  webgen.py => 根据域名生成字典，并扫描       
+- pyshellcode => bypass AV
 
-*  genpass.py => 人性弱口令字典生成   
+-  pyauth.py => 破解auth认证
 
-*  pypinyin.py => 汉字转化拼音，用于制作字典                                            
+-  webgen.py => 根据域名生成字典，并扫描       
 
-*  ccattack.py => 简单的cc攻击脚本
+-  genpass.py => 人性弱口令字典生成   
 
-*  crackzip.py =>  zip密码破解
+-  pypinyin.py => 汉字转化拼音，用于制作字典                                            
 
-* exp => some exp scripts
+-  ccattack.py => 简单的cc攻击脚本
+
+-  crackzip.py =>  zip密码破解
+
+- exp => some exp scripts
 
 happy hack  : )
 

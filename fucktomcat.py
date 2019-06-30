@@ -15,7 +15,8 @@ col_ok    = '\033[95m'
 col_end   = '\033[0m'  
 
 agent_file = "/Pentest/Scripts/PySec/pytxt/user-agents.txt"
-default_pass = '/Pentest/PassList/Passwords/pass_server.txt'
+default_pass = '/Pentest/PassList/Passwords/tomcat.txt'
+tomcat7_before_pass = '/Pentest/PassList/Passwords/fuckserver.txt'
 
 with open(agent_file,'r') as f:
     agents_list = [ line.rstrip() for line in f.readlines()]
@@ -32,7 +33,8 @@ banner = """
 if len(sys.argv) < 2:
     print banner 
     print "[*] {0} [url]  <dict_file>".format(sys.argv[0])
-    print "[*] Default Password is fuckserver.txt."
+    print "[*] Default Password is tomcat7.txt."
+    print "[*] Tomcat before 7 using big dict."
     print "[*] python pyauth.py http://xxx.com/manager/html password.txt"
     exit(0)
 
@@ -66,7 +68,7 @@ def scan():
 
 def main():
     threads_list = []
-    threads = 12
+    threads = 10
 
     for i in xrange(threads):
         t = Thread(target=scan)

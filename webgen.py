@@ -39,7 +39,7 @@ class Mydic():
     # 常用后台列表及弱口令
     login_list = [
         '','admin','admin1','admin123','admin111','admin888','ad','guanli','houtai',
-        'login','login1','admin_login','webadmin','logon','manager','manage','user',
+        'login','login1','admin_login','webadmin','web','logon','manager','manage','user',
         '123','1234','12345','123456','1234567','12345678','abc','888888','111',
     ]
 
@@ -77,7 +77,7 @@ def pass_return_list():
 
         pass_list = []
 
-        pass_file = "E:\\Tools\\PassList\\Passwords\\top300pass.txt"
+        pass_file = "/Pentest/PassList/Passwords/top200.txt"
 
         if not os.path.exists(pass_file):
             print "[x] File does not exist"

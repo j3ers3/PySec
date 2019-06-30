@@ -36,7 +36,7 @@ with open('pytxt/user-agents.txt','r') as f:
 
 HEADERS = {'user-agent':random.choice(agents_list), 'referer':'http://www.baidu.com'}
 SITE_CHOOSE = 1                     # 选择代理网站，1为西刺，2为快代
-TEST_SITE = 'http://a.newfree.pw'                       
+TEST_SITE = 'http://baidu.com'                       
 TIMEOUT = 7
 PROXY = ''
 PAGE = 30
