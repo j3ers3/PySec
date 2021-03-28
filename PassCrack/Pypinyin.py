@@ -80,7 +80,7 @@ def main():
 		usage="Usage: {0} -f <filename> -o <output> -m mode".format(__prog__),
 		version="%s: v%s (%s)" % (__prog__, __version__, __author__),
 		epilog="""Ex: Pypinyin.py -f name.txt -o output.txt  -m 1
-				   Ex: Pypinyin.py -f name.txt -m 1 | sort -rn | uniq > name_pinyin.txt""",
+				  Ex: Pypinyin.py -f name.txt -m 1 | sort -rn | uniq > name_pinyin.txt""",
 	)
 	parser.add_option('-f', '--file', dest='filename', type='string',
 		help='Dict file name')

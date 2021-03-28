@@ -14,8 +14,8 @@ user_list = ['admin','tomcat']
 col_ok    = '\033[95m'
 col_end   = '\033[0m'  
 
-agent_file = "/Pentest/Scripts/PySec/pytxt/user-agents.txt"
-default_pass = '/Pentest/PassList/Passwords/pass_server.txt'
+agent_file = "./pytxt/user-agents.txt"
+default_pass = '/Users/tianxia/Pentest/PassList/Passwords/pass_server.txt'
 
 with open(agent_file,'r') as f:
     agents_list = [ line.rstrip() for line in f.readlines()]

