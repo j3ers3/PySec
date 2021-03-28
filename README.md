@@ -1,29 +1,21 @@
 # 🍁 Hacking with python  [![Python](https://img.shields.io/badge/Python-red.svg)](http://www.python.org/download/)
-> 在渗透过程中所写的小脚本
+> 以前渗透中所写的小脚本（历史记录）
 
-- [mmap.py](https://github.com/j3ers3/PySec/blob/master/mmap.py) - 利用masscan和nmap快速全端口扫描
+- [mmap.py](https://github.com/j3ers3/PySec/blob/master/Portscan/mmap.py) - 利用masscan和nmap快速全端口扫描
 
-- [mmap.py](https://github.com/j3ers3/PySec/blob/master/mmap2.py) - 利用masscan和nmap快速全端口扫描
+- [dirwaf.py](https://github.com/j3ers3/PySec/blob/master/Rencon/dirwaf.py) - 通过随机ip绕过waf,进行web目录扫描
 
-- [dirwaf.py](https://github.com/j3ers3/PySec/blob/master/dirwaf.py) - 通过随机ip绕过waf,进行web目录扫描
+- [reverse_shell.py](https://github.com/j3ers3/PySec/blob/master/Post/reverse_shell.py) - python反弹shell
 
-- [reverse_shell.py](https://github.com/j3ers3/PySec/blob/master/reverse_shell.py) - python反弹shell
+- [pyshellcode.py](https://github.com/j3ers3/PySec/blob/master/Post/pyshellcode.py) - 使用python来打包shellcode程序
 
-- [pyshellcode.py](https://github.com/j3ers3/PySec/blob/master/pyshellcode.py) - 使用python来打包shellcode程序
+- [sqli-mysql.py](https://github.com/j3ers3/PySec/blob/master/Scan/sqli-mssql.py) - MYSQL延迟注入
 
-- [sqli-mysql.py](https://github.com/j3ers3/PySec/blob/master/SQL/sqli-mysql.py) - MYSQL延迟注入
+- [sqli-mssql-second-order.py](https://github.com/j3ers3/PySec/blob/master/Scan/sqli-mssql-second-order.py) - SQL二阶注入
 
-- [sqli-mssql.py](https://github.com/j3ers3/PySec/blob/master/SQL/sqli-mssql.py) - MSSQL延迟注入
+- [rkeylogger.py](https://github.com/j3ers3/PySec/blob/master/Post/rkeylogger.py) - 简单的键盘监听器,远程监听
 
-- [sqli-mssql-second-order.py](https://github.com/j3ers3/PySec/blob/master/SQL/sqli-mssql-second-order.py) - SQL二阶注入
-
-- [rkeylogger.py](https://github.com/j3ers3/PySec/blob/master/rkeylogger.py) - 简单的键盘监听器,远程监听
-
-- [lkeylogger.py](https://github.com/j3ers3/PySec/blob/master/lkeylogger.py) - 简单的键盘监听器,本地监听
-
-- captcha.py => 打码平台来爆破验证码
-
-- lotus.py   => Lotus Notes密码抓取并利用hashcat来爆破
+- [lkeylogger.py](https://github.com/j3ers3/PySec/blob/master/Post/lkeylogger.py) - 简单的键盘监听器,本地监听
 
 - [pyauth.py](https://github.com/j3ers3/PySec/blob/master/pyauth.py) - 破解auth认证
 
@@ -37,11 +29,9 @@
 
 -  ccattack.py => 简单的cc攻击脚本
 
--  crackzip.py =>  zip密码破解
-
 - [nmapweb.py](https://github.com/j3ers3/PySec/blob/master/nmapweb.py) - 利用nmap-bootstrap生成可视化html
 
-- [PHPStudy.py](https://github.com/j3ers3/PySec/blob/master/EXP/PHPStudy.py) - PHPStudy RCE批量利用
+- [PoC](https://github.com/j3ers3/PySec/tree/master/PoC) - 一些PoC利用
 
 happy hack  : )
 
